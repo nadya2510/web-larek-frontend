@@ -316,40 +316,40 @@ interface IBasketItemConstructor {
 ```
 Интерфейс оформления заказа Шаг1
 ```
-interface IOrderFormStep1 {
+interface IOrderForm {
     payment: string;  //способ оплаты 
     address: string;  //адрес  
 }
-interface IViewOrderFormStep1Component extends IViewOrderFormStep1,IForm<IViewOrderFormStep1> {}
+interface IViewOrderFormComponent extends IViewOrderForm,IForm<IViewOrderForm> {}
 ```
 Интерфейс конструкотра оформления заказа Шаг1
 ```
 interface IOrderConstructor {
-	new (container: HTMLFormElement, events: IEvents): IViewOrderFormStep1Component
+	new (container: HTMLFormElement, events: IEvents): IViewOrderFormComponent
 }
 
 ```
 Интерфейс оформления заказа Шаг2
 ```
- interface IOrderFormStep2 {
+ interface IСontactsForm {
     email: string; //e-mail
     phone: string; //телефон   
 }
-export interface IViewOrderFormStep2Component extends IViewOrderFormStep2,IForm<IViewOrderFormStep2> {}
+export interface IViewСontactsFormComponent extends IViewСontactsForm,IForm<IViewСontactsForm> {}
 ```
 Интерфейс конструкотра оформления заказа Шаг2
 ```
 export interface IContactsConstructor {
-	new (container: HTMLFormElement, events: IEvents): IViewOrderFormStep2Component
+	new (container: HTMLFormElement, events: IEvents): IViewСontactsFormComponent
 }
 ```
 Интерфейс оформления заказа
 ```
- interface IViewOrderForm  extends IViewOrderFormStep1, IViewOrderFormStep2{}
+ interface IViewOrder  extends IViewOrderForm, IViewСontactsForm{}
 ```
 Интерфейс оформления заказа для запроса к API
 ```
-interface IOrder  extends IViewOrderForm{ 
+interface IOrder  extends IViewOrder{ 
     total: number;  //Общая сумма заказа 
     items: string[] //массив id, выбранных лотов 
 }
@@ -376,7 +376,7 @@ openОrder - открыть форму оформления заказа шаг1
 orderClick- открыть форму оформления заказа шаг2;
 contactsClick- оформить заказ: отправка данных на сервер, обновление страницы;
 ```
-``` 
+ 
 ## События
 
 ```

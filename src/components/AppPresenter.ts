@@ -78,7 +78,7 @@ export class AppPresenter {
 		this.success = new this.successConstructor(
 			cloneTemplate(this.successTemplate),
 			{		onClick: () => {
-							close();
+							this.modal.close();
 						},
 					}
 		)

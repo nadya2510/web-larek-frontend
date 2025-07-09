@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 import { Model } from './base/Model';
 import {
 	FormErrors,
@@ -53,10 +51,9 @@ export class AppState extends Model<IAppState> implements IAppState {
 		this.catalog
 			.filter((item) => item.status === 'closed')
 			.forEach((item) => {
-				// this.toggleOrderedLot(item.id, true);
-				this.order.items = _.uniq([...this.order.items, item.id]);
+				this.order.items.push(item.id);
 			});
-		this.order.total = this.getTotal();
+		this.order.total = this.getTotal();		
 	}
 
 	getTotal() {

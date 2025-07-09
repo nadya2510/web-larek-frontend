@@ -20,7 +20,7 @@ import {
 	IBasketConstructor,
 	IBasketItemConstructor,
 	ISuccessConstructor,
-	IAuctionAPI
+	IAuctionAPI,
 } from '../types/index';
 
 export class AppPresenter {
@@ -41,7 +41,7 @@ export class AppPresenter {
 		protected events: IEvents,
 		protected appData: IAppState,
 		protected page: IViewPage,
-		protected modal: IModal,		
+		protected modal: IModal,
 		protected cardConstructor: ICardConstructor,
 		protected basketConstructor: IBasketConstructor,
 		protected basketItemConstructor: IBasketItemConstructor,
@@ -77,13 +77,12 @@ export class AppPresenter {
 
 		this.success = new this.successConstructor(
 			cloneTemplate(this.successTemplate),
-			{		onClick: () => {
-							this.modal.close();
-						},
-					}
-		)
-
-		
+			{
+				onClick: () => {
+					this.modal.close();
+				},
+			}
+		);
 
 		// Получаем лоты с сервера
 		this.api
@@ -181,7 +180,9 @@ export class AppPresenter {
 	}
 
 	delBasket(item: { id: string }) {
-		const basketIt = this.appData.getItemBasket().find((it) => it.id === item.id);
+		const basketIt = this.appData
+			.getItemBasket()
+			.find((it) => it.id === item.id);
 		this.appData.setStatusCardBasket(basketIt);
 		this.modal.close();
 		this.events.emit('basket:open');

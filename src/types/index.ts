@@ -59,8 +59,7 @@ export interface ILot {
 export type LotStatus = 'active' | 'closed';
 
 export interface IAppState {
-	catalog: ILot[];
-	basket: string[];
+	catalog: ILot[];	
 	preview: string | null;
 	order: IOrder | null;
 	clearBasket: () => void;

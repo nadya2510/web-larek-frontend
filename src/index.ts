@@ -57,19 +57,19 @@ events.on('card:delBasket', (item: { id: string }) => {
 
 //Изменился статус лот
 events.on('cardStatus:changed', () => {
-  appPresenter.countBasket();	
+  appPresenter.getCountBasket();	
 });
 
 
 // Изменилось состояние валидации формы
 events.on('formContactsErrors:change', (errors: Partial<IViewСontactsForm>) => {
-  appPresenter.formContactsErrors(errors); 	
+  appPresenter.getFormContactsErrors(errors); 	
 	
 });
 
 // Изменилось состояние валидации формы
 events.on('formOrderErrors:change', (errors: Partial<IViewOrderForm>) => {
-   appPresenter.formOrderErrors(errors); 		
+   appPresenter.getFormOrderErrors(errors); 		
 });
 
 
@@ -77,7 +77,7 @@ events.on('formOrderErrors:change', (errors: Partial<IViewOrderForm>) => {
 events.on(	
 	/^order\..*:change/,
 	(data: { field: keyof IViewOrder; value: string }) => {		
-		appPresenter.formOrder(data,'order'); 		
+		appPresenter.getFormOrder(data,'order'); 		
 	}
 );
 
@@ -85,7 +85,7 @@ events.on(
 events.on(
 	/^contacts\..*:change/,
 	(data: { field: keyof IViewOrderForm; value: string }) => {		
-		appPresenter.formOrder(data, 'contacts');		
+		appPresenter.getFormOrder(data, 'contacts');		
 	}
 );
 

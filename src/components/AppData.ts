@@ -24,7 +24,7 @@ export class LotItem extends Model<ILot> implements ILot {
 }
 
 export class AppState extends Model<IAppState> implements IAppState {
-	basket: string[];
+	
 	catalog: LotItem[];
 	order: IOrder = {
 		payment: '',
@@ -57,7 +57,7 @@ export class AppState extends Model<IAppState> implements IAppState {
 	}
 
 	getTotal() {
-		let total = this.catalog
+		const total = this.catalog
 			.filter((item) => item.status === 'closed')
 			.reduce<number>((sum, item) => sum + item.price, 0);
 		return total;

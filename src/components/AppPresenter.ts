@@ -15,6 +15,7 @@ import {
 	IViewOrderForm,
 	IViewСontactsForm,
 	OrderFormsStep,
+	IViewSuccessComponent,
 	IViewBasketComponent,
 	IBasketConstructor,
 	IBasketItemConstructor,
@@ -33,13 +34,14 @@ export class AppPresenter {
 	protected basket: IViewBasketComponent;
 	protected order: IViewOrderFormComponent;
 	protected contacts: IViewСontactsFormComponent;
+	protected success: IViewSuccessComponent;
 
 	constructor(
 		protected api: IAuctionAPI,
 		protected events: IEvents,
 		protected appData: IAppState,
 		protected page: IViewPage,
-		protected modal: IModal,
+		protected modal: IModal,		
 		protected cardConstructor: ICardConstructor,
 		protected basketConstructor: IBasketConstructor,
 		protected basketItemConstructor: IBasketItemConstructor,
@@ -72,6 +74,16 @@ export class AppPresenter {
 			cloneTemplate(this.contactsTemplate),
 			this.events
 		);
+
+		this.success = new this.successConstructor(
+			cloneTemplate(this.successTemplate),
+			{		onClick: () => {
+							close();
+						},
+					}
+		)
+
+		
 
 		// Получаем лоты с сервера
 		this.api
@@ -160,7 +172,7 @@ export class AppPresenter {
 				index: index + 1,
 			});
 		});
-		let basketTotal = this.appData.getTotal();
+		const basketTotal = this.appData.getTotal();
 		this.basket.total = basketTotal;
 
 		this.modal.render({
@@ -169,16 +181,16 @@ export class AppPresenter {
 	}
 
 	delBasket(item: { id: string }) {
-		let basketIt = this.appData.getItemBasket().find((it) => it.id === item.id);
+		const basketIt = this.appData.getItemBasket().find((it) => it.id === item.id);
 		this.appData.setStatusCardBasket(basketIt);
 		this.modal.close();
 		this.events.emit('basket:open');
 	}
 
-	countBasket() {
+	getCountBasket() {
 		this.page.counter = this.appData.getItemBasket().length;
 	}
-	formContactsErrors(errors: Partial<IViewСontactsForm>) {
+	getFormContactsErrors(errors: Partial<IViewСontactsForm>) {
 		const { email, phone } = errors;
 		this.contacts.valid = !email && !phone;
 		this.contacts.errors = Object.values({ email, phone })
@@ -186,7 +198,7 @@ export class AppPresenter {
 			.join('; ');
 	}
 
-	formOrderErrors(errors: Partial<IViewOrderForm>) {
+	getFormOrderErrors(errors: Partial<IViewOrderForm>) {
 		const { address, payment } = errors;
 		this.order.valid = !address && !payment;
 		this.order.errors = Object.values({ address, payment })
@@ -194,7 +206,7 @@ export class AppPresenter {
 			.join('; ');
 	}
 
-	formOrder(
+	getFormOrder(
 		data: { field: keyof IViewOrder; value: string },
 		step: OrderFormsStep
 	) {
@@ -231,17 +243,9 @@ export class AppPresenter {
 				this.modal.close();
 				this.appData.clearBasket();
 				this.events.emit('cardStatus:changed');
-				const success = new this.successConstructor(
-					cloneTemplate(this.successTemplate),
-					{
-						onClick: () => {
-							this.modal.close();
-						},
-					}
-				);
-				success.total = result.total; //this.appData.getTotal();
+				this.success.total = result.total; //this.appData.getTotal();
 				this.modal.render({
-					content: success.render({}),
+					content: this.success.render({}),
 				});
 			})
 			.catch((err) => {

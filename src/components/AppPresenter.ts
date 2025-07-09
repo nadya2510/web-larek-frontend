@@ -80,7 +80,7 @@ export class AppPresenter {
 			{
 				onClick: () => {
 					this.modal.close();
-				},
+				}
 			}
 		);
 

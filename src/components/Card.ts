@@ -41,7 +41,19 @@ export class Card extends Component<IViewCard> implements IViewCardComponent {
 	}
 
 	set category(value: string) {
+		const className :string = 'card__category_';
 		this.setText(this._category, value);
+    if (value ==='софт-скил'){
+			this.addClass(this._category, `${className}soft`);
+		} else if (value ==='дополнительное'){
+			this.addClass(this._category, `${className}additional`);
+		}else if (value ==='кнопка'){
+			this.addClass(this._category, `${className}button`);
+		}else if (value ==='хард-скил'){
+			this.addClass(this._category, `${className}hard`);
+		}else {
+			this.addClass(this._category, `${className}other`);
+		}
 	}
 
 	set price(value: number) {
@@ -57,5 +69,9 @@ export class Card extends Component<IViewCard> implements IViewCardComponent {
 
 	set description(value: string) {
 		this.setText(this._description, value);
+	}
+
+	set textButton(value: string){
+		this.setText(this._button, value);
 	}
 }

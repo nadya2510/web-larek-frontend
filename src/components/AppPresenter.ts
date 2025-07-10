@@ -78,7 +78,7 @@ export class AppPresenter {
 		this.success = new this.successConstructor(
 			cloneTemplate(this.successTemplate),
 			{		onClick: () => {
-							close();
+							this.modal.close();
 						},
 					}
 		)
@@ -133,6 +133,7 @@ export class AppPresenter {
 					category: item.category,
 					price: item.price,
 					description: item.description,
+					textButton: (item.price === null)?'Недоступно':(item.status==='closed')?'Удалить из корзины':'Купить'
 				}),
 			});
 		};
@@ -153,9 +154,7 @@ export class AppPresenter {
 	}
 
 	addBasket(item: LotItem) {
-		if (item.status !== 'closed') {
-			this.appData.setStatusCardBasket(item);
-		}
+		this.appData.setStatusCardBasket(item);
 		this.modal.close();
 	}
 

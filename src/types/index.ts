@@ -86,12 +86,15 @@ export interface ICardActions {
 	onClick: (event: MouseEvent) => void;
 }
 
+
+
 export interface IViewCard {
 	title: string;
 	category: string;
 	price: number | null;
 	image: string;
 	description: string | null;
+	textButton: string;
 }
 
 export interface IViewCardComponent extends IViewCard, IComponent<IViewCard> {}
